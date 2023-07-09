@@ -1,28 +1,124 @@
 from random import randint
 
-#  Напишите программу, которая на вход принимает два числа A и B, и возводит число А в целую степень B с помощью рекурсии.
-print ("Задание №1: Напишите программу, которая на вход принимает два числа A и B, и возводит число А в целую степень B с помощью рекурсии")
-def stepen(a,b):
-    if b==0:
-        return 1
-    return a*stepen(a,b-1)
-num=int(input("Введите число для возведения в степень -"))
-step=int(input("Введите степень числа -"))
-print (stepen (num,step)) 
-print()
+# Заполните массив элементами арифметической прогрессии. 
+# Её первый элемент, разность и количество элементов нужно ввести с клавиатуры. 
+# Формула для получения n-го члена прогрессии: an = a1 + (n-1) * d.
+# Каждое число вводится с новой строки.
 
-# Напишите рекурсивную функцию sum(a, b), возвращающую сумму двух целых неотрицательных чисел.
-#  Из всех арифметических операций допускаются только +1 и -1. Также нельзя использовать циклы.
-print("Напишите рекурсивную функцию sum(a, b), возвращающую сумму двух целых неотрицательных чисел.")
-print("Из всех арифметических операций допускаются только +1 и -1. Также нельзя использовать циклы.")
-num1=int(input("Введите первое число -"))
-num2=int(input("Введите первое число -"))
-def sumnum (a,b):
-    if (a+b)==0:
-        return 0
-    return 1+sumnum(a,b-1)
+list1=list()
+a1=int(input("Введите первый элемент последовательности - "))
+n=int(input("Введите кол-во элементов последовательности - "))
+d=int(input("Введите коэфециент - "))
 
-print (sumnum (num1,num2)) 
+for i in range(1,n+1):
+    list1.append(a1+(i-1)*d)
+print (list1)
+
+
+# Определить индексы элементов массива (списка), значения которых принадлежат 
+# заданному диапазону (т.е. не меньше заданного минимума и не больше заданного максимума)
+
+n=int(input("Введите кол-во элементов массива - "))
+n_lim=int(input("Введите максивальное значение элемента массива - "))
+n_min=int(input("Введите нижний предел обработки значений - "))
+n_max=int(input("Введите верхний предел обработки значений - "))
+
+list1=[randint(1,100) for _ in range(n)]
+print (f'Исходный массив {list1}')
+
+list_rez=[i for i in range(0,len(list1)) if list1[i]>=n_min and list1[i]<=n_max]
+
+print (f'Массив индексов соответсвующих гарницам поиска {list_rez}')
+
+
+# colors=['red','green','black','yellow']
+# data = open('file.txt','a')
+# data.writelines(colors)
+# data.close()
+
+# def quck_sort (array):
+#     if len(array)<=1:
+#         return array
+#     pivot=array[0]
+#     less =[i for i in array[1:] if i<=pivot]
+#     grater =[i for i in array[1:] if i>pivot]
+#     return quck_sort(less) + [pivot] + quck_sort(grater)
+
+# array=(9,5,1,23,64,42,45,75)
+# print(quck_sort(array))
+# print(array)
+
+# num = int(input("Введите число - "))
+# def posled(count:int):
+#     if count==0:
+#         return ""
+#     char=input("-")
+#     return (char+posled(count-1)+char)
+
+# print(posled(num))
+
+# num = int(input("Введите число - "))
+# def chackNum (n : int) -> bool:
+#     for i in range(2,n):
+#         if n%i==0:
+#             print(i, n%i)
+#             return False
+#         return True
+# print (chackNum(num))
+
+# list1=list()
+# # for i in range(1,10):
+# #     list1.append(randint(1,5))
+# list1=[randint(1,5) for _ in range(10)]
+# print (list1)
+# def changeMinMax(listNum: list[int]) -> list[int]:
+#     maxn=max(listNum)
+#     minn=min(listNum)
+#     print (minn, maxn)
+#     return [mark if mark!=maxn else minn for mark in listNum]
+# print (changeMinMax(list1))
+
+# str1=[2,4,8]
+
+# my_funct= lambda x : x%2==0
+
+# def same_by(str1,funct):
+#     new_l=list(filter(funct,str1))
+#     if len(new_l)==len(str1):
+#         return True
+#     return False
+
+# print(same_by(str1,my_funct))
+
+
+# transformation = lambda x:x
+# values=[2,4,5,7,6]
+# transformated_values=list(map(transormation,lam))
+
+
+# #  Напишите программу, которая на вход принимает два числа A и B, и возводит число А в целую степень B с помощью рекурсии.
+# print ("Задание №1: Напишите программу, которая на вход принимает два числа A и B, и возводит число А в целую степень B с помощью рекурсии")
+# def stepen(a,b):
+#     if b==0:
+#         return 1
+#     return a*stepen(a,b-1)
+# num=int(input("Введите число для возведения в степень -"))
+# step=int(input("Введите степень числа -"))
+# print (stepen (num,step)) 
+# print()
+
+# # Напишите рекурсивную функцию sum(a, b), возвращающую сумму двух целых неотрицательных чисел.
+# #  Из всех арифметических операций допускаются только +1 и -1. Также нельзя использовать циклы.
+# print("Напишите рекурсивную функцию sum(a, b), возвращающую сумму двух целых неотрицательных чисел.")
+# print("Из всех арифметических операций допускаются только +1 и -1. Также нельзя использовать циклы.")
+# num1=int(input("Введите первое число -"))
+# num2=int(input("Введите первое число -"))
+# def sumnum (a,b):
+#     if (a+b)==0:
+#         return 0
+#     return 1+sumnum(a,b-1)
+
+# print (sumnum (num1,num2)) 
 
 
 # def fibonach(num):
