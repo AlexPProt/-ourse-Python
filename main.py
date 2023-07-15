@@ -1,19 +1,154 @@
 from random import randint
+import os
 
-#Напишите функцию print_operation_table(operation, num_rows=6, num_columns=6), которая принимает 
-# в качестве аргумента функцию, вычисляющую элемент по номеру строки и столбца. Аргументы num_rows
-#  и num_columns указывают число строк и столбцов таблицы, которые должны быть распечатаны. Нумерация 
-# строк и столбцов идет с единицы (подумайте, почему не с нуля). Примечание: бинарной операцией 
-# называется любая операция, у которой ровно два аргумента, как, например, у операции умножения.
+def clear_console():
+    os.system('cls')
 
-def print_operation_table(operation, num_rows, num_columns):
 
-    for i in range(1,num_rows+1):
-        for j in range (1, num_columns+1):
-            print (operation(i,j),end="\t")
-        print()
-funct=lambda x,y:x*y
-print (print_operation_table(funct,10, 10))
+book_dict={}
+
+def read_phone():
+    with open('phonebook.txt', 'r',encoding='utf-8') as file:
+        data=file.read()
+    print (data)
+    return data
+
+
+def add_contact():
+    name=input("Введите новое имя для создания контакта -")
+    number = input("Введите номер нового контакта -")
+    with open('phonebook.txt', 'a',encoding='utf-8') as file:
+        file.writelines(str(name)+": " + str(number)+"\n")
+    print("Запись успешено добавлена")
+    return file
+
+def find_contact ():
+    name=input("Введите имя контакта для поиска -")
+    with open('phonebook.txt', 'r',encoding='utf-8') as file:
+        for i in file.readlines():
+            if i:
+                key,val=i.strip().split(':')
+                book_dict[key] =val
+        for i in book_dict.keys():
+            if i==name:
+                return f'{i} - {book_dict[i]}'
+        return "Контакт не найден"
+
+def change_contact(name):
+    new_name=input("Введите новое имя выбранному контакту - ")
+    bool_num = input("Телефон требует редактирования? (Y/N) - ")
+    if bool_num=="Y":
+        new_number=input("Введите новый номер телефона - ")
+    with open('phonebook.txt', 'r',encoding='utf-8') as file:
+        flag=True
+        for i in file.readlines():
+            if i:
+                key,val=i.strip().split(':')
+                if key==name:
+                    temp_num=val
+                    if bool_num=='N':
+                        new_number=val
+                    flag=False
+                    break
+        if flag:
+            return "Контакт не найден"
+        with open('phonebook.txt', 'r',encoding='utf-8') as file:
+            data=file.read()
+            temp_data=data.replace(name,new_name)
+            temp_data=temp_data.replace(temp_num,new_number)
+            with open('phonebook.txt', 'w',encoding='utf-8') as newfile:
+                newfile.write(temp_data)
+                return "Контакт успешено обновлен"  
+        
+def del_contact ():
+    name=input("Введите имя контакта для удаления - ")
+    flag=True
+    with open('phonebook.txt', 'r',encoding='utf-8') as file:
+        for i in file.readlines():
+            if i:
+                key,val=i.strip().split(':')
+                if key!=name:
+                    book_dict[key] =val           
+                else:
+                    flag=False
+    if flag:
+        return "Контакт "+str(name) +" не найден"
+    with open('phonebook.txt', 'w',encoding='utf-8') as newfile:
+        for key,val in book_dict.items():
+            newfile.write(f'{key}:{val}\n')
+        return "Контакт "+str(name) +" удален."
+    
+def Selec_position():
+    clear_console()
+    print ("Выберите пункт согласно меню:")
+    print ("1- Вывести контактный список.")
+    print ("2- Изменить контакт.")
+    print ("3- Добавить контакт.")
+    print ("4- Удалить контакт.")
+    print ("5- Найти контакт.")
+    print ("6- Выход.")
+    select=int(input("Ожидание ввода - "))
+    if select>=1 and select<=6:
+        return select
+    else:
+        print("Выбран не верный номер меню")
+        input()
+        return Selec_position()
+     
+sel_pos=Selec_position()
+while sel_pos!=6:
+    if sel_pos==1: # Выбор чтения тел книги
+        read_phone()
+    if sel_pos==2: # Выбор редактирование записи
+        name=str(input("Введите имя для редактирования - "))
+        print(change_contact(name))
+    if sel_pos==3: # Выбор добавления записи
+        add_contact() 
+    if sel_pos==4:  # Выбор удаления записи     
+        print(del_contact ())
+    if sel_pos==5:  # Выбор удаления записи     
+        print(find_contact ())
+    input("Продожаем работу, нажмите ввод-")
+    sel_pos = Selec_position()
+
+
+
+
+
+
+# find_name=str('Матвей')
+# nm=str('Олеся')
+# nn=str('111111')
+# print(del_contact(find_name))
+
+# print(add_contact('Леся',4345437))
+# print('1 - Открыть справочник')
+
+
+
+
+
+
+# #Напишите функцию print_operation_table(operation, num_rows=6, num_columns=6), которая принимает 
+# # в качестве аргумента функцию, вычисляющую элемент по номеру строки и столбца. Аргументы num_rows
+# #  и num_columns указывают число строк и столбцов таблицы, которые должны быть распечатаны. Нумерация 
+# # строк и столбцов идет с единицы (подумайте, почему не с нуля). Примечание: бинарной операцией 
+# # называется любая операция, у которой ровно два аргумента, как, например, у операции умножения.
+
+# def print_operation_table(operation, num_rows, num_columns):
+
+#     for i in range(1,num_rows+1):
+#         print (i, end='\t')
+#         for j in range (1, num_columns+1):
+#             print (operation(i,j),end="\t")
+#         print()
+    
+# funct=lambda x,y:x*y
+# print(end='\t')
+# for i in range(1,11):
+#     print(i,end='\t')
+# print('\n')
+# print (print_operation_table(funct,10, 10))
 
  
 
@@ -25,18 +160,22 @@ print (print_operation_table(funct,10, 10))
 # Стихотворение  Винни-Пух вбивает в программу с клавиатуры. В ответе напишите “Парам пам-пам”, 
 # если с ритмом все в порядке и “Пам парам”, если с ритмом все не в порядке
 
-poem="пара-ра-рам рам-пам-папам па-ра-па-да по-дю"
-glasn=list('ауеыояиюэ')
-longcount=set()
-poem=poem.split()
-for i in range(0,len(poem)):
-    rez=list(poem[i])
-    glancount=list(filter(lambda x:x==glasn[0],rez))
-    longcount.add(len(glancount))
-if len(longcount)==1:
-    print ('Парам пам-пам')
-else:
-    print ('Пам парам')
+# poem="пара-рэ-рам рам-пам-папюм па-рэ-па-да па-да-ыу" 
+# glasn=list('ауеыояиюэ')
+# longcount=set()
+# poem=poem.split()
+# count=0
+# for i in range(0,len(poem)):
+#     rez=list(poem[i])
+#     for j in range(0,len(glasn)):
+#         glasncount=list(filter(lambda x:x==glasn[j],rez))
+#         count+=len(glasncount)
+#     longcount.add(count)
+#     count=0
+# if len(longcount)==1:
+#     print ('Парам пам-пам')
+# else:
+#     print ('Пам парам')
 
 
 # colors=['red','green','stop','yellow','\n']
